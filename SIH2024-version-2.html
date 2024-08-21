@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYUSH Startup Portal</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: transparent;
+            padding: 15px 0;
+            position: absolute;
+            width: 100%;
+            z-index: 999;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(0, 77, 64, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .navbar-brand {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transform: translateY(-50px);
+            opacity: 0;
+            animation: slideDown 1s forwards 0.3s ease-out;
+        }
+
+        .navbar .nav-item {
+            list-style: none;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards 0.7s ease-in-out;
+        }
+
+        .navbar .nav-item .nav-link {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar .nav-item .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #a7ffeb;
+            transition: width 0.3s ease-in-out;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+
+        .navbar .nav-item .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar .nav-item .nav-link:hover {
+            color: #a7ffeb;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(to bottom right, #00796b, #004d40);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle, rgba(0, 77, 64, 0.6), rgba(0, 77, 64, 0));
+            z-index: 0;
+            transform: rotate(45deg);
+            animation: rotateBG 30s infinite linear;
+        }
+
+        @keyframes rotateBG {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            z-index: 1;
+            position: relative;
+            animation: slideDown 1.5s ease-out forwards;
+        }
+
+        .hero-section p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            z-index: 1;
+            position: relative;
+            animation: fadeInUp 1.5s ease-out forwards 0.5s;
+        }
+
+        .btn-hero {
+            background-color: #a7ffeb;
+            color: #004d40;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.5s ease-out forwards 1s;
+        }
+
+        .btn-hero:hover {
+            background-color: #80cbc4;
+            transform: translateY(-5px);
+        }
+
+        /* Register Section */
+        .register-section {
+            background-color: #fff;
+            padding: 80px 0;
+        }
+
+        .register-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s forwards 1.5s ease;
+        }
+
+        .register-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #00796b;
+            box-shadow: 0 5px 15px rgba(0, 121, 107, 0.2);
+            outline: none;
+        }
+
+        .btn-register {
+            background-color: #004d40;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-register:hover {
+            background-color: #00332e;
+            transform: translateY(-5px);
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .navbar {
+            background-color: rgba(27, 27, 27, 0.95);
+        }
+
+        .dark-mode .navbar .nav-link {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .hero-section {
+            background: linear-gradient(to bottom right, #333, #1b1b1b);
+        }
+
+        .dark-mode .btn-hero {
+            background-color: #444;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .register-section {
+            background-color: #1e1e1e;
+        }
+
+        .dark-mode .form-control {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .btn-register {
+            background-color: #444;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Navbar Scroll Event */
+        @media (min-width: 768px) {
+            .navbar.scrolled {
+                background-color: rgba(0, 77, 64, 0.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">AYUSH Portal</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Startups</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Empowering AYUSH Startups</h1>
+            <p>Your journey to innovation begins here. Join us today and take your startup to new heights.</p>
+            <a href="#register" class="btn-hero">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Register Section -->
+    <section class="register-section" id="register">
+        <div class="register-container">
+            <h2>Register Your Startup</h2>
+            <form>
+                <div class="form-group">
+                    <label for="startupName" class="form-label">Startup Name</label>
+                    <input type="text" id="startupName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="founderName" class="form-label">Founder Name</label>
+                    <input type="text" id="founderName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact" class="form-label">Contact</label>
+                    <input type="tel" id="contact" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-register">Register</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <label>
+            <input type="checkbox" id="darkModeToggle"> Dark Mode
+        </label>
+    </div>
+
+    <script>
+        // Dark Mode Toggle
+        document.getElementById("darkModeToggle").addEventListener("change", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener("scroll", function () {
+            var navbar = document.querySelector(".navbar");
+            navbar.classList.toggle("scrolled", window.scrollY > 50);
+        });
+    </script>
+</body>
+
+</html>
